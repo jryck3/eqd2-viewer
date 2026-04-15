@@ -77,13 +77,18 @@
     <div id="siteChips" style="display: flex; flex-wrap: wrap; gap: 6px; max-height: 90px; overflow-y: auto; padding: 4px; border: 0.5px solid var(--border-tertiary); border-radius: var(--border-radius-md);"></div>
     <div style="margin-top: 4px; font-size: 11px; color: var(--text-tertiary);">Empty = include all sites</div>
   </div>
-  <div style="display: flex; flex-wrap: wrap; gap: 14px; margin: 8px 0 12px; font-size: 12px; color: var(--text-secondary); align-items: center;">
-    <span style="display: flex; align-items: center; gap: 6px;"><svg width="14" height="14"><circle cx="7" cy="7" r="5" fill="#185FA5" stroke="#185FA5" stroke-width="1.5"></circle></svg>Timmerman &#x27;21</span>
-    <span style="display: flex; align-items: center; gap: 6px;"><svg width="14" height="14"><circle cx="7" cy="7" r="5" fill="none" stroke="#185FA5" stroke-width="1.5"></circle></svg>Timmerman</span>
-    <span style="display: flex; align-items: center; gap: 6px;"><svg width="14" height="14"><circle cx="7" cy="7" r="5" fill="none" stroke="#185FA5" stroke-width="1.5" stroke-dasharray="1.5,1.5"></circle></svg>TG-101</span>
-    <span style="display: flex; align-items: center; gap: 6px;"><svg width="14" height="14"><circle cx="7" cy="7" r="5" fill="none" stroke="#185FA5" stroke-width="1.5" stroke-dasharray="4,2"></circle></svg>UK SABR &#x27;22</span>
-    <span style="display: flex; align-items: center; gap: 6px;"><svg width="14" height="14"><defs><pattern id="lhS" patternUnits="userSpaceOnUse" width="3" height="3" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="3" stroke="#ffffff" stroke-width="1.2"></line></pattern></defs><circle cx="7" cy="7" r="5" fill="#185FA5"></circle><circle cx="7" cy="7" r="5" fill="url(#lhS)" stroke="#185FA5" stroke-width="1.5"></circle></svg>PRO Oligo &#x27;21</span>
-    <span style="display: flex; align-items: center; gap: 6px;"><svg width="14" height="14"><circle cx="7" cy="7" r="3.5" fill="#888780"></circle></svg>No keyed landmark</span>
+  <div style="margin: 0 0 8px;">
+    <div style="font-size: 12px; color: var(--text-secondary); margin: 0 0 6px; font-weight: 500; display: flex; justify-content: space-between; align-items: baseline;">
+      <span>Landmark filter (click to toggle)</span>
+      <span style="display: flex; gap: 8px; align-items: center;">
+        <button type="button" id="lmAll" style="font-size: 11px; padding: 2px 8px;">All</button>
+        <button type="button" id="lmNone" style="font-size: 11px; padding: 2px 8px;">None</button>
+        <span id="lmSummary" style="font-size: 11px; font-weight: 400; color: var(--text-tertiary);"></span>
+      </span>
+    </div>
+    <div id="lmChips" style="display: flex; flex-wrap: wrap; gap: 6px; padding: 4px; border: 0.5px solid var(--border-tertiary); border-radius: var(--border-radius-md);"></div>
+  </div>
+  <div style="display: flex; flex-wrap: wrap; gap: 14px; margin: 4px 0 12px; font-size: 12px; color: var(--text-secondary); align-items: center;">
     <span style="display: flex; align-items: center; gap: 6px;"><svg width="14" height="14"><line x1="7" y1="2" x2="7" y2="12" stroke="#888780" stroke-width="1.5"></line></svg>Tolerance range</span>
     <span style="display: flex; align-items: center; gap: 6px;"><span style="display: inline-block; width: 18px; height: 2px; background: #185FA5;"></span>Conv reference</span>
   </div>
@@ -108,6 +113,20 @@ var OAR_AB = {"Brainstem":2,"CaudaEquina":2,"Esophagus":3,"Stomach":3,"SpinalCor
 var REFS = {"Bladder":{"gy":80,"num":1033,"nom":"V80 Gy \u2264 15-20%","src":"QUANTEC conv","metric":"near-max","ab":3},"Bowel_Bag":{"gy":45,"num":3382,"nom":"V45 Gy \u2264 165-195 cc","src":"QUANTEC conv","metric":"near-max","ab":3},"Brain":{"gy":90,"num":3593,"nom":"D0.035cc \u2264 90 Gy","src":"QUANTEC conv","metric":"near-max","ab":3},"Brainstem":{"gy":59,"num":18,"nom":"V59 Gy \u2264 1-10 cc","src":"QUANTEC conv","metric":"near-max","ab":2},"Constrict_Musc":{"gy":60,"num":3885,"nom":"60 Gy ALARA","src":"QUANTEC conv","metric":"near-max","ab":3},"Distal_Bronchial_Tree":{"gy":80,"num":480,"nom":"D0.1cc \u2264 80 Gy","src":"QUANTEC conv","metric":"near-max","ab":3},"Esophagus":{"gy":74,"num":297,"nom":"V74 Gy \u2264 1-1.5 cc","src":"QUANTEC conv","metric":"near-max","ab":3},"Heart":{"gy":30,"num":402,"nom":"V30 Gy \u2264 20-30%","src":"QUANTEC conv","metric":"near-max","ab":3},"Kidney_Cortex_Contra":{"gy":6,"num":811,"nom":"V6 Gy \u2264 30%","src":"QUANTEC conv","metric":"near-max","ab":3},"Kidney_Cortex_Solitary":{"gy":6,"num":1641,"nom":"V6 Gy \u2264 30%","src":"QUANTEC conv","metric":"near-max","ab":3},"Larynx":{"gy":63,"num":267,"nom":"D0.035-0.1cc \u2264 63-66 Gy","src":"QUANTEC conv","metric":"near-max","ab":3},"Larynx_G":{"gy":50,"num":279,"nom":"V50 Gy \u2264 50%","src":"QUANTEC conv","metric":"near-max","ab":3},"Larynx_SG":{"gy":63,"num":2862,"nom":"D0.035-0.1cc \u2264 63-66 Gy","src":"QUANTEC conv","metric":"near-max","ab":3},"OpticChiasm":{"gy":60,"num":82,"nom":"D0.035-0.1cc \u2264 60 Gy","src":"QUANTEC conv","metric":"near-max","ab":2},"Oral_Cavity":{"gy":11,"num":1351,"nom":"Dmean \u2264 11 Gy","src":"QUANTEC conv","metric":"near-max","ab":3},"Parotid_Contra":{"gy":26,"num":2491,"nom":"Dmean \u2264 26 Gy","src":"QUANTEC conv","metric":"near-max","ab":3},"Parotid_Ipsi":{"gy":11,"num":3347,"nom":"Dmean \u2264 11-26 Gy","src":"QUANTEC conv","metric":"near-max","ab":3},"Parotids (Each)":{"gy":20,"num":243,"nom":"Dmean \u2264 20-26 Gy","src":"QUANTEC conv","metric":"near-max","ab":3},"PenileBulb":{"gy":60,"num":1129,"nom":"V60-70 Gy \u2264 60-70%","src":"QUANTEC conv","metric":"near-max","ab":3},"Rectum":{"gy":75,"num":942,"nom":"V75 Gy \u2264 15-20%","src":"QUANTEC conv","metric":"near-max","ab":3},"SpinalCord":{"gy":54,"num":77,"nom":"D0.035-0.1cc \u2264 54 Gy","src":"QUANTEC conv","metric":"near-max","ab":2},"Submand_Glnd_Contra":{"gy":39,"num":2489,"nom":"Dmean \u2264 39 Gy","src":"QUANTEC conv","metric":"near-max","ab":3},"Submand_Glnd_Ipsi":{"gy":11,"num":1349,"nom":"Dmean \u2264 11-24 Gy","src":"QUANTEC conv","metric":"near-max","ab":3},"Submands_Glnd":{"gy":35,"num":3281,"nom":"Dmean \u2264 35 Gy","src":"QUANTEC conv","metric":"near-max","ab":3},"Liver":{"gy":36,"num":1921,"nom":"CV 36 Gy \u2265 700 cc (conv, EQD2-equiv)","src":"QUANTEC conv CV","metric":"CV","ab":3},"Kidney_Cortex":{"gy":27,"num":2123,"nom":"CV 27 Gy \u2265 200 cc (conv, EQD2-equiv)","src":"QUANTEC conv CV","metric":"CV","ab":3},"Lungs":{"gy":18,"num":1838,"nom":"CV 18 Gy \u2265 950 cc (conv, EQD2-equiv)","src":"QUANTEC conv CV","metric":"CV","ab":3},"Biliary_Tree":{"gy":80,"num":768,"nom":"D0.1 cc \u2264 80 Gy (conv)","src":"Conv fallback","metric":"near-max","ab":3},"BrachialPlexs":{"gy":75,"num":159,"nom":"D0.1-0.5 cc \u2264 75 Gy (conv)","src":"Conv fallback","metric":"near-max","ab":3},"Bowel_Large":{"gy":70,"num":2008,"nom":"D0.035 cc \u2264 70 Gy (conv)","src":"Conv fallback","metric":"near-max","ab":3},"Aorta":{"gy":74,"num":2673,"nom":"V74 Gy \u2264 1 cc (conv)","src":"Conv fallback","metric":"near-max","ab":3},"Anal_Canal":{"gy":51,"num":2671,"nom":"D0.5 cc \u2264 51-60 Gy (conv)","src":"Conv fallback","metric":"near-max","ab":3},"Cochlea":{"gy":55,"num":103,"nom":"V55-60 Gy \u2264 5% (near-max)","src":"DAHANCA conv (override)","metric":"near-max","ab":2},"Bowel_Small":{"gy":54,"num":1968,"nom":"D0.03 cc \u2264 54 Gy (conv)","src":"Conv fallback (override)","metric":"near-max","ab":3},"Stomach":{"gy":50,"num":3134,"nom":"D0.035 cc \u2264 50 Gy (conv)","src":"Conv fallback (override)","metric":"near-max","ab":3}};
 var ALL_FX = ["1","2","3","4","5","6","8","10","15-16","20","25","26","28","BID"];
 var KEYED = ["Timmerman '21","Timmerman","TG-101","UK SABR '22","PRO Oligo '21"];
+var ALL_LANDMARKS = ["Timmerman '21","Timmerman","TG-101","UK SABR '22","PRO Oligo '21","_none"];
+var LM_ICON = {
+  "Timmerman '21": '<svg width="14" height="14"><circle cx="7" cy="7" r="5" fill="#185FA5" stroke="#185FA5" stroke-width="1.5"></circle></svg>',
+  "Timmerman":     '<svg width="14" height="14"><circle cx="7" cy="7" r="5" fill="none" stroke="#185FA5" stroke-width="1.5"></circle></svg>',
+  "TG-101":        '<svg width="14" height="14"><circle cx="7" cy="7" r="5" fill="none" stroke="#185FA5" stroke-width="1.5" stroke-dasharray="1.5,1.5"></circle></svg>',
+  "UK SABR '22":   '<svg width="14" height="14"><circle cx="7" cy="7" r="5" fill="none" stroke="#185FA5" stroke-width="1.5" stroke-dasharray="4,2"></circle></svg>',
+  "PRO Oligo '21": '<svg width="14" height="14"><defs><pattern id="lhS" patternUnits="userSpaceOnUse" width="3" height="3" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="3" stroke="#ffffff" stroke-width="1.2"></line></pattern></defs><circle cx="7" cy="7" r="5" fill="#185FA5"></circle><circle cx="7" cy="7" r="5" fill="url(#lhS)" stroke="#185FA5" stroke-width="1.5"></circle></svg>',
+  "_none":         '<svg width="14" height="14"><circle cx="7" cy="7" r="3.5" fill="#888780"></circle></svg>'
+};
+var LM_LABEL = {
+  "Timmerman '21": "Timmerman \u201921", "Timmerman": "Timmerman",
+  "TG-101": "TG-101", "UK SABR '22": "UK SABR \u201922",
+  "PRO Oligo '21": "PRO Oligo \u201921", "_none": "No keyed landmark"
+};
 var COLOR = "#185FA5";
 var OARS_SORTED = Object.keys(ALL_OAR_COUNTS).sort(function(a,b){
   return a.toLowerCase() < b.toLowerCase() ? -1 : a.toLowerCase() > b.toLowerCase() ? 1 : 0;
@@ -116,7 +135,8 @@ var SITE_COUNTS = {};
 DATA.forEach(function(r){ r.sites.forEach(function(s){ SITE_COUNTS[s] = (SITE_COUNTS[s]||0) + 1; }); });
 var SITES_SORTED = Object.keys(SITE_COUNTS).sort(function(a,b){return SITE_COUNTS[b]-SITE_COUNTS[a];});
 var defaultOar = OARS_SORTED.indexOf("Rectum") !== -1 ? "Rectum" : OARS_SORTED[0];
-var state = {oarA: defaultOar, sites: new Set(), fx: new Set(ALL_FX)};
+var DEFAULT_FX = new Set(["1","2","3","4","5","8","10","15-16","20"]);
+var state = {oarA: defaultOar, sites: new Set(), fx: new Set(DEFAULT_FX), lm: new Set(ALL_LANDMARKS)};
 function populateOarSelect(el) {
   el.innerHTML = '';
   OARS_SORTED.forEach(function(oar){
@@ -185,6 +205,41 @@ function renderSiteChips() {
   });
 }
 renderSiteChips();
+function renderLmChips() {
+  var el = document.getElementById('lmChips');
+  el.innerHTML = '';
+  ALL_LANDMARKS.forEach(function(lm){
+    var active = state.lm.has(lm);
+    var btn = document.createElement('button');
+    btn.type = 'button';
+    btn.style.cssText = 'display:flex;align-items:center;gap:5px;padding:3px 10px;font-size:12px;cursor:pointer;border-radius:var(--border-radius-md);border:0.5px solid ' + (active ? '#185FA5' : 'var(--border-secondary)') + ';background:' + (active ? 'rgba(24,95,165,0.08)' : 'transparent') + ';color:' + (active ? 'var(--text-primary)' : 'var(--text-tertiary)') + ';font-weight:500;opacity:' + (active ? '1' : '0.5') + ';';
+    var iconSpan = document.createElement('span');
+    iconSpan.innerHTML = LM_ICON[lm];
+    btn.appendChild(iconSpan);
+    var labelSpan = document.createElement('span');
+    labelSpan.textContent = LM_LABEL[lm];
+    btn.appendChild(labelSpan);
+    btn.addEventListener('click', function(){
+      if (state.lm.has(lm)) state.lm.delete(lm); else state.lm.add(lm);
+      renderLmChips(); updateLmSummary(); rebuild();
+    });
+    el.appendChild(btn);
+  });
+}
+function updateLmSummary() {
+  var s = document.getElementById('lmSummary');
+  if (state.lm.size === ALL_LANDMARKS.length) s.textContent = 'all';
+  else if (state.lm.size === 0) s.textContent = 'none selected';
+  else s.textContent = state.lm.size + ' of ' + ALL_LANDMARKS.length + ' selected';
+}
+document.getElementById('lmAll').addEventListener('click', function(){
+  state.lm = new Set(ALL_LANDMARKS); renderLmChips(); updateLmSummary(); rebuild();
+});
+document.getElementById('lmNone').addEventListener('click', function(){
+  state.lm = new Set(); renderLmChips(); updateLmSummary(); rebuild();
+});
+renderLmChips();
+updateLmSummary();
 function activeFxOrder() { return ALL_FX.filter(function(f){return state.fx.has(f);}); }
 function computeYMax() {
   var maxY = 0;
@@ -201,6 +256,12 @@ function computeYMax() {
 function recordPasses(r) {
   if (r.oar !== state.oarA) return false;
   if (!state.fx.has(r.fx)) return false;
+  var keyedPresent = r.landmarks.filter(function(l){return KEYED.indexOf(l) !== -1;});
+  if (keyedPresent.length === 0) {
+    if (!state.lm.has("_none")) return false;
+  } else {
+    if (!keyedPresent.some(function(l){return state.lm.has(l);})) return false;
+  }
   if (state.sites.size === 0) return true;
   if (r.sites.length === 0) return false;
   return r.sites.some(function(s){return state.sites.has(s);});
@@ -237,7 +298,7 @@ function buildMarkersAndSegs() {
         borderColor: "#00000066", borderWidth: 1.5, pointRadius: 0, hoverRadius: 0
       });
     }
-    var keyedPresent = r.landmarks.filter(function(l){return KEYED.indexOf(l) !== -1;});
+    var keyedPresent = r.landmarks.filter(function(l){return KEYED.indexOf(l) !== -1 && state.lm.has(l);});
     if (keyedPresent.length === 0) {
       markers.push({x: baseX, y: r.eqd2, _dyUnit: 0, raw: r, landmark: null, style: "neutral"});
     } else {
